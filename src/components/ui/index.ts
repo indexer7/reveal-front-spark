@@ -1,0 +1,20 @@
+// UI Components barrel exports for clean imports
+export { Button, buttonVariants } from "./button";
+export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from "./card";
+export { Input } from "./input";
+export { Label } from "./label";
+export { Progress } from "./progress";
+export { Slider } from "./slider";
+export { Switch } from "./switch";
+export { toast, useToast } from "./use-toast";
+export { Toaster } from "./toaster";
+export { Spinner } from "./spinner";
+export { Badge } from "./badge";
+export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption } from "./table";
+export { Tabs, TabsList, TabsTrigger, TabsContent } from "./tabs";
+export { Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "./dialog";
+export { Form, FormItem, FormLabel, FormControl, FormDescription, FormMessage, FormField } from "./form";
+export { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./select";
+export { Separator } from "./separator";
+export { Sheet, SheetTrigger, SheetContent, SheetHeader, SheetTitle, SheetDescription, SheetFooter } from "./sheet";
+export { Sidebar, SidebarProvider, SidebarTrigger, SidebarContent, SidebarGroup, SidebarGroupContent, SidebarGroupLabel, SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from "./sidebar";

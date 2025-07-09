@@ -1,73 +1,157 @@
-# Welcome to your Lovable project
+# Reveal.me Frontend
 
-## Project info
+A production-ready OSINT (Open Source Intelligence) scanning platform built with React, TypeScript, and modern web technologies.
 
-**URL**: https://lovable.dev/projects/6197a536-b3f5-4fa2-bae7-c5e2af416b88
+## 🚀 Quick Start
 
-## How can I edit this code?
+```bash
+# Install dependencies
+npm install
 
-There are several ways of editing your application.
-
-**Use Lovable**
-
-Simply visit the [Lovable Project](https://lovable.dev/projects/6197a536-b3f5-4fa2-bae7-c5e2af416b88) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
+
+# Open http://localhost:5173
 ```
 
-**Edit a file directly in GitHub**
+## 🏗️ Tech Stack
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **React 18** + **TypeScript** - Modern UI framework with type safety
+- **Vite** - Fast build tool and dev server  
+- **Tailwind CSS** - Utility-first CSS framework
+- **shadcn/ui** - Beautiful, accessible component library
+- **React Router v6** - Client-side routing
+- **React Query** - Data fetching and caching
+- **React Flow** - Interactive diagrams
+- **Recharts** - Data visualization
+- **Axios** - HTTP client
+- **MSW** - API mocking for development
+- **Vitest** - Unit testing framework
 
-**Use GitHub Codespaces**
+## 🌟 Features
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Core Functionality
+- **Target Selection** - Add domains, IPs, emails, phone numbers for scanning
+- **Real-time Monitoring** - Live scan progress with WebSocket updates (TODO)
+- **Interactive Scoring** - Adjust risk weights with live chart updates
+- **Report Generation** - PDF and HTML reports with comprehensive analysis
+- **File Upload** - Drag-and-drop file management with progress tracking
 
-## What technologies are used for this project?
+### Security & Access Control
+- **JWT Authentication** - Secure token-based auth with refresh tokens
+- **Role-based Access** - Admin, Analyst, and Viewer roles
+- **Protected Routes** - Automatic redirect for unauthenticated users
+- **HttpOnly Cookies** - Secure refresh token storage
 
-This project is built with:
+### User Experience
+- **Professional Design** - Blue gradient theme with smooth animations
+- **Responsive Layout** - Mobile-first design with collapsible sidebar
+- **Real-time Updates** - Live polling for scan status and progress
+- **Toast Notifications** - User-friendly success/error messaging
+- **Loading States** - Skeleton loaders and spinners throughout
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 📁 Project Structure
 
-## How can I deploy this project?
+```
+src/
+├── components/
+│   ├── ui/              # shadcn components + custom UI
+│   └── layout/          # Layout components (sidebar, navbar)
+├── hooks/               # Custom React hooks
+├── pages/               # Route components
+├── routes/              # Route protection logic
+├── services/            # API client and services
+├── lib/                 # Utilities and type definitions
+└── mocks/               # MSW mock handlers
+```
 
-Simply open [Lovable](https://lovable.dev/projects/6197a536-b3f5-4fa2-bae7-c5e2af416b88) and click on Share -> Publish.
+## 🔧 Environment Variables
 
-## Can I connect a custom domain to my Lovable project?
+Create a `.env.development` file:
 
-Yes, you can!
+```env
+VITE_API_URL=http://localhost:8000
+```
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 📚 Available Scripts
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+```bash
+npm run dev        # Start development server
+npm run build      # Build for production
+npm run preview    # Preview production build
+npm run lint       # Run ESLint
+npm run test       # Run tests with Vitest
+```
+
+## 🔐 Authentication Flow
+
+1. **Login/Register** - Email/password with role selection
+2. **JWT Tokens** - Access token (memory) + refresh token (HttpOnly cookie)
+3. **Auto-refresh** - Transparent token renewal on 401 responses
+4. **Role-based Access** - Route protection based on user roles
+
+## 🔗 API Integration
+
+The frontend expects a FastAPI backend with these endpoints:
+
+- `POST /api/auth/login` - User authentication
+- `POST /api/auth/register` - User registration  
+- `POST /api/scan` - Start new OSINT scan
+- `GET /api/scans/:id/status` - Get scan progress
+- `GET /api/scoring/:id` - Get risk scoring data
+- `POST /api/reports/:id/generate` - Generate reports
+
+## 🧪 Testing
+
+```bash
+# Run unit tests
+npm run test
+
+# Run tests in watch mode  
+npm run test:watch
+
+# Generate coverage report
+npm run test:coverage
+```
+
+## 🚀 Deployment
+
+```bash
+# Build for production
+npm run build
+
+# The dist/ folder contains optimized static files
+# Deploy to any static hosting service
+```
+
+## 🎨 Design System
+
+The application uses a custom blue-themed design system built on top of Tailwind CSS:
+
+- **Primary Colors** - Professional blue gradients
+- **Typography** - Clean, readable font hierarchy
+- **Components** - Consistent spacing and rounded corners
+- **Animations** - Smooth transitions and hover effects
+- **Dark Mode** - Full dark theme support (TODO)
+
+## 🔄 Development Workflow
+
+1. **Mock-first Development** - Use MSW for API mocking during development
+2. **Type Safety** - Comprehensive TypeScript coverage
+3. **Component Testing** - Test components in isolation
+4. **E2E Testing** - Critical user journeys (TODO)
+
+## 📄 License
+
+This project is proprietary software. All rights reserved.
+
+## 🤝 Contributing
+
+1. Follow the existing code style and patterns
+2. Add tests for new features
+3. Update documentation as needed
+4. Use conventional commit messages
+
+---
+
+Built with ❤️ using modern web technologies for professional OSINT operations.

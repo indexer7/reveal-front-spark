@@ -19,4 +19,11 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
+  define: {
+    // Prevent duplicate React instances
+    __DEV__: mode === 'development',
+  },
 }));
