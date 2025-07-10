@@ -3,6 +3,7 @@
 export interface User {
   id: string;
   email: string;
+  name: string;
   role: 'admin' | 'analyst' | 'viewer';
   createdAt: string;
   updatedAt: string;
@@ -21,6 +22,7 @@ export interface LoginCredentials {
 export interface RegisterCredentials {
   email: string;
   password: string;
+  name: string;
   role: 'admin' | 'analyst' | 'viewer';
 }
 

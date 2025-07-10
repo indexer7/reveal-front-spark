@@ -9,7 +9,7 @@ import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 // Pages
 import { Login } from "./pages/Login";
-import { Register } from "./pages/Register";
+import { Profile } from "./pages/Profile";
 import { Home } from "./pages/Home";
 import { Scan } from "./pages/Scan";
 import { FlowDiagram } from "./pages/FlowDiagram";
@@ -32,7 +32,6 @@ const AppRoutes = () => (
   <Routes>
     {/* Public routes */}
     <Route path="/login" element={<Login />} />
-    <Route path="/register" element={<Register />} />
     
     {/* Protected routes */}
     <Route path="/" element={
@@ -47,6 +46,7 @@ const AppRoutes = () => (
       <Route path="scoring/:jobId" element={<Scoring />} />
       <Route path="report/:jobId" element={<Report />} />
       <Route path="upload" element={<Upload />} />
+      <Route path="profile" element={<Profile />} />
       
       {/* Admin routes */}
       <Route path="admin/*" element={

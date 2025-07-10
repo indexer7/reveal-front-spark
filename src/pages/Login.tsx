@@ -161,15 +161,6 @@ export const Login = () => {
               </form>
             </Form>
             
-            <div className="mt-6 text-center text-sm">
-              <span className="text-muted-foreground">Don't have an account? </span>
-              <Link 
-                to="/register" 
-                className="text-primary hover:text-primary-dark font-medium transition-smooth"
-              >
-                Sign up
-              </Link>
-            </div>
           </CardContent>
         </Card>
       </div>

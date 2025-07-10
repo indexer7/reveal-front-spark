@@ -19,6 +19,24 @@ const mockUsers = [
     name: 'Test User',
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString()
+  },
+  {
+    id: '3',
+    email: 'analyst@reveal.me',
+    password: 'analyst123',
+    role: 'analyst' as const,
+    name: 'Data Analyst',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
+  },
+  {
+    id: '4',
+    email: 'manager@reveal.me',
+    password: 'manager123',
+    role: 'admin' as const,
+    name: 'System Manager',
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   }
 ];
 
@@ -67,6 +85,16 @@ export const enableMockApi = () => {
               });
             }
           }, 500);
+        });
+      }
+      
+      // Mock register (removed functionality)
+      if (url.includes('/api/auth/register') && config?.method === 'post') {
+        return Promise.reject({
+          response: {
+            status: 403,
+            data: { error: 'Registration is disabled. Contact administrator for access.' }
+          }
         });
       }
       
