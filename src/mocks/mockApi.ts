@@ -25,93 +25,110 @@ const mockUsers = [
 let currentUser: typeof mockUsers[0] | null = null;
 
 export const enableMockApi = () => {
-  // Remove any existing interceptors
+  // Clear existing interceptors
+  api.interceptors.request.clear();
   api.interceptors.response.clear();
   
-  // Add mock interceptor
-  api.interceptors.request.use((config) => {
-    const url = config.url || '';
-    
-    // Mock login
-    if (url.includes('/api/auth/login') && config.method === 'post') {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          const { email, password } = JSON.parse(config.data || '{}');
-          const user = mockUsers.find(u => u.email === email && u.password === password);
-          
-          if (user) {
-            currentUser = user;
-            const { password: _, ...userWithoutPassword } = user;
-            resolve({
-              ...config,
-              data: {
+  // Add response interceptor for mocking
+  api.interceptors.response.use(
+    (response) => response,
+    (error) => {
+      const config = error.config;
+      const url = config?.url || '';
+      
+      // Mock login
+      if (url.includes('/api/auth/login') && config?.method === 'post') {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            const { email, password } = JSON.parse(config.data || '{}');
+            const user = mockUsers.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+              currentUser = user;
+              const { password: _, ...userWithoutPassword } = user;
+              resolve({
                 data: {
-                  accessToken: 'mock-access-token-' + Date.now(),
-                  user: userWithoutPassword
+                  data: {
+                    accessToken: 'mock-access-token-' + Date.now(),
+                    user: userWithoutPassword
+                  }
+                },
+                status: 200,
+                statusText: 'OK',
+                headers: {},
+                config
+              });
+            } else {
+              reject({
+                response: {
+                  status: 401,
+                  data: { error: 'Invalid credentials' }
                 }
-              }
-            } as any);
-          } else {
-            reject({
-              response: {
-                status: 401,
-                data: { error: 'Invalid credentials' }
-              }
-            });
-          }
-        }, 500); // Simulate network delay
-      });
-    }
-    
-    // Mock refresh
-    if (url.includes('/api/auth/refresh') && config.method === 'post') {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve({
-            ...config,
-            data: {
-              data: { accessToken: 'mock-refresh-token-' + Date.now() }
+              });
             }
-          } as any);
-        }, 200);
-      });
-    }
-    
-    // Mock me endpoint
-    if (url.includes('/api/auth/me') && config.method === 'get') {
-      return new Promise((resolve, reject) => {
-        setTimeout(() => {
-          if (currentUser) {
-            const { password: _, ...userWithoutPassword } = currentUser;
+          }, 500);
+        });
+      }
+      
+      // Mock refresh
+      if (url.includes('/api/auth/refresh') && config?.method === 'post') {
+        return new Promise((resolve) => {
+          setTimeout(() => {
             resolve({
-              ...config,
-              data: { data: userWithoutPassword }
-            } as any);
-          } else {
-            reject({
-              response: {
-                status: 401,
-                data: { error: 'Unauthorized' }
-              }
+              data: {
+                data: { accessToken: 'mock-refresh-token-' + Date.now() }
+              },
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config
             });
-          }
-        }, 200);
-      });
+          }, 200);
+        });
+      }
+      
+      // Mock me endpoint
+      if (url.includes('/api/auth/me') && config?.method === 'get') {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (currentUser) {
+              const { password: _, ...userWithoutPassword } = currentUser;
+              resolve({
+                data: { data: userWithoutPassword },
+                status: 200,
+                statusText: 'OK',
+                headers: {},
+                config
+              });
+            } else {
+              reject({
+                response: {
+                  status: 401,
+                  data: { error: 'Unauthorized' }
+                }
+              });
+            }
+          }, 200);
+        });
+      }
+      
+      // Mock logout
+      if (url.includes('/api/auth/logout') && config?.method === 'post') {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            currentUser = null;
+            resolve({
+              data: { data: null },
+              status: 200,
+              statusText: 'OK',
+              headers: {},
+              config
+            });
+          }, 200);
+        });
+      }
+      
+      return Promise.reject(error);
     }
-    
-    // Mock logout
-    if (url.includes('/api/auth/logout') && config.method === 'post') {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          currentUser = null;
-          resolve({
-            ...config,
-            data: { data: null }
-          } as any);
-        }, 200);
-      });
-    }
-    
-    return config;
-  });
+  );
 };
