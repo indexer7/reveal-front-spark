@@ -42,8 +42,11 @@ const AppRoutes = () => (
       <Route index element={<Home />} />
       <Route path="scan" element={<Scan />} />
       <Route path="flow" element={<FlowDiagram />} />
+      <Route path="status" element={<ScanStatus />} />
       <Route path="status/:jobId" element={<ScanStatus />} />
+      <Route path="scoring" element={<Scoring />} />
       <Route path="scoring/:jobId" element={<Scoring />} />
+      <Route path="report" element={<Report />} />
       <Route path="report/:jobId" element={<Report />} />
       <Route path="upload" element={<Upload />} />
       <Route path="profile" element={<Profile />} />
