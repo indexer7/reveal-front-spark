@@ -1,5 +1,4 @@
-import { Bell, Settings, User, LogOut } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+import { Bell, Settings, User } from 'lucide-react';
 import { Button, SidebarTrigger } from '@/components/ui';
 import {
   DropdownMenu,
@@ -10,20 +9,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Link } from 'react-router-dom';
 
 export const NavBar = () => {
-  const { user, logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
-  };
-
-  const getUserInitials = (email: string) => {
-    return email.split('@')[0].slice(0, 2).toUpperCase();
+  const mockUser = {
+    email: 'admin@reveal.me',
+    name: 'Administrator',
+    role: 'admin'
   };
 
   return (
@@ -53,7 +45,7 @@ export const NavBar = () => {
             <Button variant="ghost" className="relative h-8 w-8 rounded-full">
               <Avatar className="h-8 w-8">
                 <AvatarFallback className="bg-primary text-primary-foreground text-xs">
-                  {user ? getUserInitials(user.email) : 'U'}
+                  AD
                 </AvatarFallback>
               </Avatar>
             </Button>
@@ -62,30 +54,25 @@ export const NavBar = () => {
           <DropdownMenuContent className="w-56" align="end" forceMount>
             <DropdownMenuLabel className="font-normal">
               <div className="flex flex-col space-y-1">
-                <p className="text-sm font-medium leading-none">{user?.email}</p>
+                <p className="text-sm font-medium leading-none">{mockUser.email}</p>
                 <p className="text-xs leading-none text-muted-foreground capitalize">
-                  {user?.role}
+                  {mockUser.role}
                 </p>
               </div>
             </DropdownMenuLabel>
             
             <DropdownMenuSeparator />
             
-            <DropdownMenuItem>
-              <User className="mr-2 h-4 w-4" />
-              <span>Profile</span>
+            <DropdownMenuItem asChild>
+              <Link to="/profile">
+                <User className="mr-2 h-4 w-4" />
+                <span>Profile</span>
+              </Link>
             </DropdownMenuItem>
             
             <DropdownMenuItem>
               <Settings className="mr-2 h-4 w-4" />
               <span>Settings</span>
-            </DropdownMenuItem>
-            
-            <DropdownMenuSeparator />
-            
-            <DropdownMenuItem onClick={handleLogout} className="text-destructive">
-              <LogOut className="mr-2 h-4 w-4" />
-              <span>Log out</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

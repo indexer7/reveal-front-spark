@@ -11,7 +11,7 @@ import {
   Shield,
   FileSearch
 } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+
 import {
   Sidebar,
   SidebarContent,
@@ -46,7 +46,6 @@ const adminNavItems = [
 export const AppSidebar = () => {
   const sidebar = useSidebar();
   const collapsed = sidebar.state === 'collapsed';
-  const { user } = useAuth();
   const location = useLocation();
 
   const isActive = (path: string) => {
@@ -61,8 +60,8 @@ export const AppSidebar = () => {
       ? 'bg-primary text-primary-foreground shadow-primary' 
       : 'hover:bg-accent hover:text-accent-foreground';
 
-  // Hide admin items for non-admin users
-  const showAdminItems = user?.role === 'admin';
+  // Show all admin items since no auth
+  const showAdminItems = true;
 
   return (
     <Sidebar className={collapsed ? 'w-14' : 'w-64'} collapsible="icon">

@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Eye, EyeOff, Lock, User, Mail } from 'lucide-react';
-import { useAuth } from '@/hooks/useAuth';
+
 import {
   Button,
   Card,
@@ -38,7 +38,11 @@ export const Profile = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const { user } = useAuth();
+  const user = {
+    email: 'admin@reveal.me',
+    name: 'Administrator',
+    role: 'admin'
+  };
 
   const form = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),

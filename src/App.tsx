@@ -3,12 +3,9 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthContext, useAuthProvider } from "@/hooks/useAuth";
 import { MainLayout } from "@/components/layout/MainLayout";
-import { ProtectedRoute } from "@/routes/ProtectedRoute";
 
 // Pages
-import { Login } from "./pages/Login";
 import { Profile } from "./pages/Profile";
 import { Home } from "./pages/Home";
 import { Scan } from "./pages/Scan";
@@ -30,15 +27,7 @@ const queryClient = new QueryClient({
 
 const AppRoutes = () => (
   <Routes>
-    {/* Public routes */}
-    <Route path="/login" element={<Login />} />
-    
-    {/* Protected routes */}
-    <Route path="/" element={
-      <ProtectedRoute>
-        <MainLayout />
-      </ProtectedRoute>
-    }>
+    <Route path="/" element={<MainLayout />}>
       <Route index element={<Home />} />
       <Route path="scan" element={<Scan />} />
       <Route path="flow" element={<FlowDiagram />} />
@@ -50,13 +39,7 @@ const AppRoutes = () => (
       <Route path="report/:jobId" element={<Report />} />
       <Route path="upload" element={<Upload />} />
       <Route path="profile" element={<Profile />} />
-      
-      {/* Admin routes */}
-      <Route path="admin/*" element={
-        <ProtectedRoute requiredRole="admin">
-          <div>Admin Panel - Coming Soon</div>
-        </ProtectedRoute>
-      } />
+      <Route path="admin/*" element={<div>Admin Panel - Coming Soon</div>} />
     </Route>
     
     <Route path="*" element={<NotFound />} />
@@ -64,19 +47,15 @@ const AppRoutes = () => (
 );
 
 const App = () => {
-  const auth = useAuthProvider();
-
   return (
     <QueryClientProvider client={queryClient}>
-      <AuthContext.Provider value={auth}>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <AppRoutes />
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthContext.Provider>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
+      </TooltipProvider>
     </QueryClientProvider>
   );
 };
